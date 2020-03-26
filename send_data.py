@@ -10,7 +10,7 @@ import requests
 import json
 
 # URL INFO
-url_mcp = 'url'
+url_mcp = <URL>
 url_auth = url_mcp +'/tron/api/v1/tokens'
 
 username = 'zihan'
@@ -46,8 +46,8 @@ def extract_values(obj, key):
 import telegram
 from telegram.ext import Updater
 
-TOKEN = '1048266058:AAGEni8P9BEQMydtAu2aIg0V0lkoQXO_IYw'
-ID = '1048266058'
+TOKEN = <TOKEN>
+ID = <ID>
 
 bot = telegram.Bot(token=TOKEN)
 updater = Updater(token=TOKEN, use_context=True)
