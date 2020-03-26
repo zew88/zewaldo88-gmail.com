@@ -43,6 +43,20 @@ def extract_values(obj, key):
     results = extract(obj, arr, key)
     return results
   
+import telegram
+from telegram.ext import Updater
+
+TOKEN = '1048266058:AAGEni8P9BEQMydtAu2aIg0V0lkoQXO_IYw'
+ID = '1048266058'
+
+bot = telegram.Bot(token=TOKEN)
+updater = Updater(token=TOKEN, use_context=True)
+
+#CHAT_ID = bot.get_updates()[-1].message.chat_id
+def sendToTelegram(alarms):
+    bot.send_message(chat_id=<TOKEN>, text=alarms)
+    print ('Message Sent')
+    return;
 
 # defining a params dict for the parameters to be sent to the API 
 auth = {'username' : username,
@@ -65,11 +79,12 @@ header_params = {'accept': 'application/json',
 url_alrm_fin = url_act_alarm + '?severity='+ severity + '&serviceAffecting=' + service_affecting + '&acknowledgeState=' + acknowledg_state + '&pageSize=' + number_of_alarm
   
 # sending get request and saving the response as response object 
-r = requests.get(url = url_alrm_fin, headers=header_params, verify= False) 
+response = requests.get(url = url_alrm_fin, headers=header_params, verify= False) 
 
 alarm = r.json() 
 
-alarm_data = alarm['data']
+# Send to Telegram
+sendToTelegram(alarm['data'])
 
 
 
