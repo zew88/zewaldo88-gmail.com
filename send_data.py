@@ -7,19 +7,42 @@ Created on Tue Mar 24 17:16:25 2020
 """
 # importing the requests library 
 import requests 
+import json
 
-  
-url_mcp = 'https://172.30.20.20'
+# URL INFO
+url_mcp = 'url'
 url_auth = url_mcp +'/tron/api/v1/tokens'
 
 username = 'zihan'
-password = 'Password!123'
+password = 'pass'
 
 # alarm_filter
 severity = 'CRITICAL'
 service_affecting = 'SERVICE_AFFECTING'
 acknowledg_state = ''
 number_of_alarm = '10'
+
+# Extract JSON
+def extract_values(obj, key):
+    """Pull all values of specified key from nested JSON."""
+    arr = []
+
+    def extract(obj, arr, key):
+        """Recursively search for values of key in JSON tree."""
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                if isinstance(v, (dict, list)):
+                    extract(v, arr, key)
+                elif k == key:
+                    arr.append(v)
+        elif isinstance(obj, list):
+            for item in obj:
+                extract(item, arr, key)
+        return arr
+
+    results = extract(obj, arr, key)
+    return results
+  
 
 # defining a params dict for the parameters to be sent to the API 
 auth = {'username' : username,
@@ -46,4 +69,7 @@ r = requests.get(url = url_alrm_fin, headers=header_params, verify= False)
 
 alarm = r.json() 
 
-#curl -X GET "https://172.30.20.20/nsa/api/v1/alarms/filter/activeAlarms?severity=CRITICAL&offset=0&pageSize=500" -H "accept: application/json" -H "Token: c4822817f60089718db8"
+alarm_data = alarm['data']
+
+
+
